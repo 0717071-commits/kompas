@@ -83,10 +83,14 @@ button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 /* заставка */
 .hero{position:relative;height:260px;display:grid;place-items:center}
 .hero .halo{position:absolute;width:236px;height:236px;border-radius:50%;background:color-mix(in srgb,var(--surface) 70%,transparent);box-shadow:0 20px 50px rgba(47,97,83,.12)}
-.hero.art{height:auto;margin-inline:calc(-1 * max(18px,env(safe-area-inset-left,0px)));display:block}
-.hero.art img{display:block;width:100%;height:auto;max-height:420px;object-fit:cover;object-position:50% 40%;
-  -webkit-mask-image:linear-gradient(#000 75%,transparent);mask-image:linear-gradient(#000 75%,transparent)}
-@media (min-width:640px){.hero.art{margin-inline:0}.hero.art img{border-radius:var(--r) var(--r) 0 0}}
+.hero.art{height:auto;margin-inline:-10px;display:block}
+/* иллюстрации нарисованы на кремовой бумаге: в светлой теме «впитываем» их в фон страницы */
+/* края картинки мягко растворяются в бумаге страницы */
+.soft-edges{-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent),linear-gradient(transparent,#000 9%,#000 88%,transparent);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent),linear-gradient(transparent,#000 9%,#000 88%,transparent);mask-composite:intersect}
+.hero.art img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hero.art img{mix-blend-mode:normal;border-radius:var(--r);opacity:.92}}
+:root[data-theme="dark"] .hero.art img{mix-blend-mode:normal;border-radius:var(--r);opacity:.92}
 .hero.slim{height:110px}
 .hero.slim .halo{width:96px;height:96px}
 .compass{position:relative;width:200px;height:200px;filter:drop-shadow(0 10px 22px rgba(47,97,83,.28)) drop-shadow(0 2px 4px rgba(30,40,35,.15))}
@@ -156,8 +160,10 @@ details[open] summary{margin-bottom:10px}
 .badge{width:60px;height:60px;border-radius:18px;background:var(--accent-soft);display:grid;place-items:center}
 .badge.warm{background:var(--warm-soft)}
 .badge.warm .ico{color:var(--warm)}
-.badge.art{width:120px;height:120px;background:none;border-radius:0}
-.badge.art img{width:100%;height:100%;object-fit:contain}
+.badge.art{width:132px;height:auto;background:none;border-radius:0;margin:-6px 0 -4px -8px}
+.badge.art img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .badge.art img{mix-blend-mode:normal;border-radius:16px}}
+:root[data-theme="dark"] .badge.art img{mix-blend-mode:normal;border-radius:16px}
 
 /* итог */
 .res-sphere{display:flex;flex-direction:column;gap:8px}

@@ -28,7 +28,7 @@ const IMG=window.KOMPAS_IMAGES||{spheres:{}};
 const ic=(id,cls='ico')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[id]}</svg>`;
 const icw=id=>`<span class="icw">${ic(id)}</span>`;
 /* крупный знак сферы: иллюстрация из img/, если есть, иначе иконка */
-const badge=(id,warm)=>IMG.spheres&&IMG.spheres[id]?`<div class="badge art"><img src="${IMG.spheres[id]}" alt="" width="120" height="120"></div>`:`<div class="badge ${warm?'warm':''}">${ic(id,'ico lg')}</div>`;
+const badge=(id,warm)=>IMG.spheres&&IMG.spheres[id]?`<div class="badge art"><img class="soft-edges" src="${IMG.spheres[id]}" alt="" width="360" height="486"></div>`:`<div class="badge ${warm?'warm':''}">${ic(id,'ico lg')}</div>`;
 
 /* компас для заставки: зелёный безель со шкалой, стороны света, роза ветров, объёмная стрелка */
 function compass(){
@@ -58,7 +58,7 @@ function compass(){
   <circle cx="100" cy="100" r="3" fill="var(--accent)"/>
   </svg>`}
 function hero(slim){
-  if(IMG.hero&&!slim)return `<div class="hero art"><img src="${IMG.hero}" alt="" fetchpriority="high"></div>`;
+  if(IMG.hero&&!slim)return `<div class="hero art"><img class="soft-edges" src="${IMG.hero}" alt="" width="2000" height="1333" fetchpriority="high"></div>`;
   return `<div class="hero ${slim?'slim':''}"><div class="halo"></div>${compass()}</div>`}
 
 const QUALITIES=['забота','честность','терпение','любопытство','смелость','надёжность','щедрость','внимательность','юмор','открытость','уважение','справедливость','настойчивость','нежность','игривость','доброта к себе','спокойная твёрдость','благодарность'];
@@ -147,7 +147,6 @@ function vIntro(){
    <p><b style="color:var(--ink)">Всё остаётся на этом устройстве.</b> Ответы никуда не отправляются; поделиться с психологом можно в конце, если захотите.</p>
    <p>Разговор о ценностях иногда задевает: замечать, где жизнь идёт не так, как хочется, бывает больно. Это нормально и даже говорит о том, что вам это важно. Можно сделать паузу и вернуться позже — ответы сохранятся.</p>
   </div>
-  <footer class="foot"><a href="psychologist.html">Для психолога: как пользоваться</a></footer>
   </div>`}
 
 function demoRose(){ // показываем образ розы с примерными данными, не трогая состояние
@@ -252,7 +251,6 @@ function vResult(){
   <div class="card share"><h3>Сохранить у себя</h3>
    <div class="row split"><button class="btn ghost" data-act="png">${I_IMG}Картинка</button><button class="btn ghost" data-act="copy">${I_TXT}Текст</button></div>
    <pre class="copy" id="copytext" hidden>${esc(asText())}</pre></div>
-  <footer class="foot"><a href="psychologist.html">Как читать розу</a> · <a href="./" data-act="leave">Открыть упражнение</a></footer>
   </div>`;
   return `<div class="view stack" style="gap:18px">
   ${S.example?`<div class="banner"><span><b>Это пример заполнения.</b> Так выглядит итог.</span><button class="btn" data-act="own">Начать своё</button></div>`:''}
