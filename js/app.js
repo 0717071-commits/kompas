@@ -254,7 +254,7 @@ function vResult(){
   </div>`;
   return `<div class="view stack" style="gap:18px">
   ${S.example?`<div class="banner"><span><b>Это пример заполнения.</b> Так выглядит итог.</span><button class="btn" data-act="own">Начать своё</button></div>`:''}
-  ${hero(true)}
+  ${IMG.result?`<div class="hero art"><img class="soft-edges" src="${IMG.result}" alt="" width="2000" height="1333" loading="lazy"></div>`:hero(true)}
   <div class="stack"><span class="eyebrow">Итог · ${ds}</span><h2>Ваш компас</h2>
   <p class="muted">Это не оценка и не диагноз, а карта на сегодня. Через неделю можно отметить сферы заново и посмотреть, что изменилось.</p></div>
   <div class="card">${rose({highlight:true})}</div>
