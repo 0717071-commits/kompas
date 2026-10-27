@@ -28,7 +28,7 @@ function resultURL(){
 function shareLink(){
   const url=resultURL();
   const long=url.length>MSG_LIMIT;
-  const done=()=>toast(long?'Ссылка скопирована. Она длинная: если мессенджер её обрежет, отправьте картинку':'Ссылка скопирована — вставьте её в чат с психологом');
+  const done=()=>toast(long?'Ссылка скопирована. Она длинная: если мессенджер её обрежет, отправьте картинку':'Ссылка скопирована. Вставьте её в чат с психологом');
   // на телефоне — системное меню «Поделиться», на компьютере — копирование
   if(navigator.share&&matchMedia('(pointer:coarse)').matches){
     navigator.share({title:'Компас ценностей',url}).catch(err=>{if(err&&err.name!=='AbortError')copyText(url,'Ссылка скопирована',()=>prompt('Скопируйте ссылку',url))});
@@ -40,7 +40,7 @@ function shareLink(){
 (function start(){
   const h=location.hash;
   if(h.startsWith('#r=')){
-    try{const json=LZString.decompressFromEncodedURIComponent(h.slice(3));S=unpackState(JSON.parse(json));VIEW=true;document.title='Результат клиента — Компас ценностей'}
+    try{const json=LZString.decompressFromEncodedURIComponent(h.slice(3));S=unpackState(JSON.parse(json));VIEW=true;document.title='Результат клиента · Компас ценностей'}
     catch(e){S=load();render();toast('Ссылка повреждена или обрезана. Попросите клиента прислать её ещё раз');return}
     render();return}
   if(h==='#example'){fillExample();S.step='result';VIEW=false;history.replaceState(null,'',location.pathname);render();return}

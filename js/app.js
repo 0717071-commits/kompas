@@ -156,16 +156,16 @@ function vIntro(){
    ${has?'<button class="btn link" data-act="reset-ask" style="align-self:center">Начать заново</button><div id="resetbox"></div>':''}</div>
   <div class="card stack">${demoRose()}</div>
   <div class="stack small muted">
-   <p><b style="color:var(--ink)">Займёт 15–20 минут.</b> Правильных ответов нет: пишите своими словами — так, как думаете и чувствуете.</p>
+   <p><b style="color:var(--ink)">Займёт 15–20 минут.</b> Правильных ответов нет: пишите своими словами, так, как думаете и чувствуете.</p>
    <p><b style="color:var(--ink)">Всё остаётся на этом устройстве.</b> Ответы никуда не отправляются; поделиться с психологом можно в конце, если захотите.</p>
-   <p>Разговор о ценностях иногда задевает: замечать, где жизнь идёт не так, как хочется, бывает больно. Это нормально и даже говорит о том, что вам не всё равно. Можно сделать паузу и вернуться позже — ответы сохранятся.</p>
+   <p>Разговор о ценностях иногда задевает: замечать, где жизнь идёт не так, как хочется, бывает больно. Это нормально и даже говорит о том, что вам не всё равно. Можно сделать паузу и вернуться позже: ответы сохранятся.</p>
   </div>
   </div>`}
 
 function demoRose(){ // показываем образ розы с примерными данными, не трогая состояние
   const keep={r:S.ratings,c:S.chosen,p:S.prev};
   if(!Object.keys(S.ratings).length){S.ratings=exampleRatings();S.chosen=[];S.prev=null}
-  const html=rose()+`<p class="small muted" style="text-align:center">${keep.r&&Object.keys(keep.r).length?'Ваша карта сфер':'Так выглядит карта сфер (пример)'}: зелёная дуга — насколько сфера важна, терракотовый сектор — сколько в ней было действий. Разрыв между ними подсказывает, куда направить внимание.</p>`;
+  const html=rose()+`<p class="small muted" style="text-align:center">${keep.r&&Object.keys(keep.r).length?'Ваша карта сфер':'Так выглядит карта сфер (пример)'}: зелёная дуга показывает, насколько сфера важна, а терракотовый сектор, сколько в ней было действий. Разрыв между ними подсказывает, куда направить внимание.</p>`;
   S.ratings=keep.r;S.chosen=keep.c;S.prev=keep.p;return html}
 
 function vMap(){
@@ -179,13 +179,13 @@ function vMap(){
    <div class="sphere-head"><div class="titled">${icw(s.id)}<div><h3>${s.name}</h3><p class="small muted">${s.hint}</p></div></div>
     <button class="btn link" data-act="skip" data-sid="${s.id}">${r.skip?'Вернуть':'Пропустить'}</button></div>
    <div class="scales stack" style="gap:4px">
-    <div class="scale imp ${r.ti?'':'untouched'}"><label for="i-${s.id}">Насколько важно для меня</label><output id="oi-${s.id}">${r.ti?r.imp:'—'}</output>
+    <div class="scale imp ${r.ti?'':'untouched'}"><label for="i-${s.id}">Насколько важно для меня</label><output id="oi-${s.id}">${r.ti?r.imp:'?'}</output>
      <input type="range" min="0" max="10" step="1" id="i-${s.id}" value="${r.imp}" style="--p:${r.imp*10}%" data-k="imp" data-sid="${s.id}"></div>
-    <div class="scale act ${r.ta?'':'untouched'}"><label for="a-${s.id}">Сколько я делал(а) для этого за неделю</label><output id="oa-${s.id}">${r.ta?r.act:'—'}</output>
+    <div class="scale act ${r.ta?'':'untouched'}"><label for="a-${s.id}">Сколько я делал(а) для этого за неделю</label><output id="oa-${s.id}">${r.ta?r.act:'?'}</output>
      <input type="range" min="0" max="10" step="1" id="a-${s.id}" value="${r.act}" style="--p:${r.act*10}%" data-k="act" data-sid="${s.id}"></div>
    </div></div>`}).join('')}
   </div>
-  <p class="small muted">0 — совсем не важно / ничего не делал(а), 10 — очень важно / жил(а) этим каждый день.</p>
+  <p class="small muted">0: совсем не важно / ничего не делал(а). 10: очень важно / жил(а) этим каждый день.</p>
   </div>`}
 
 function gaps(){return SPHERES.filter(s=>rated(s.id)).map(s=>({s,imp:S.ratings[s.id].imp,act:S.ratings[s.id].act,gap:S.ratings[s.id].imp-S.ratings[s.id].act})).sort((a,b)=>b.gap-a.gap||b.imp-a.imp)}
@@ -213,7 +213,7 @@ function vDir(i){
    <p>Попробуйте один из вопросов:</p>
    <p class="quote">Представьте, что одобрение всех важных для вас людей уже гарантировано. Каким бы вы тогда были в этой сфере?</p>
    <p class="quote">Через много лет вы оглядываетесь назад. Каким вы хотели бы себя вспомнить в этой сфере?</p>
-   <p class="small muted">Слова для вдохновения — нажмите, чтобы добавить в ответ:</p>
+   <p class="small muted">Слова для вдохновения. Нажмите, чтобы добавить в ответ:</p>
    <div class="chips">${[...SPHERE_EX[id].words,...QUALITIES.filter(q=>!SPHERE_EX[id].words.includes(q))].map(q=>`<button class="chip" data-act="q" data-q="${q}">${q}</button>`).join('')}</div>
   </div></details>
   ${field('deeds','Как это выглядело бы в поступках?','Что заметил бы человек, который понаблюдал за вами неделю?',v.deeds,`Например: ${SPHERE_EX[id].deeds}…`)}
@@ -239,7 +239,7 @@ function vAct(i){
   <div class="field"><label for="f-barriers">Какие мысли и чувства могут встать на пути?</label>
    <span class="sub">Необязательно. Например: «будет неловко», «ничего не изменится», усталость.</span>
    <textarea id="f-barriers" data-s="barriers">${esc(st.barriers)}</textarea>
-   <div class="hint">Их не нужно побеждать или ждать, пока пройдут. Достаточно заметить и взять с собой в дорогу — как попутчиков, которые ворчат, но не держат руль.</div></div>
+   <div class="hint">Их не нужно побеждать или ждать, пока пройдут. Достаточно заметить и взять с собой в дорогу, как попутчиков, которые ворчат, но не держат руль.</div></div>
   </div>`}
 
 const I_LINK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
@@ -286,7 +286,7 @@ function vResult(){
 
 function asText(){
   const d=fmtDate(S.date);
-  let t=`Компас ценностей — ${d}\n\nКарта сфер (важно / действий):\n`;
+  let t=`Компас ценностей, ${d}\n\nКарта сфер (важно / действий):\n`;
   SPHERES.forEach(s=>{const r=S.ratings[s.id];if(!r)return;t+=r.skip?`• ${s.name}: пропущено\n`:`• ${s.name}: ${r.imp} / ${r.act}${S.prev&&S.prev[s.id]&&!S.prev[s.id].skip?` (в прошлый раз действий ${S.prev[s.id].act})`:''}\n`});
   S.chosen.forEach(id=>{const s=sp(id),v=S.values[id]||{},st=S.steps[id]||{};
     t+=`\n${s.name.toUpperCase()}\n`;
@@ -352,7 +352,7 @@ app&&app.addEventListener('click',e=>{const b=e.target.closest('button,a[data-ac
 });
 function copyText(t,msg,fallback){const ok=()=>toast(msg);
   try{navigator.clipboard.writeText(t).then(ok,fallback)}catch(err){fallback()}}
-function selectCopy(){const el=document.getElementById('copytext');el.hidden=false;const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Текст выделен — скопируйте его')}
+function selectCopy(){const el=document.getElementById('copytext');el.hidden=false;const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Текст выделен, скопируйте его')}
 let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2600)}
 
 /* ---------- пример ---------- */
