@@ -30,17 +30,32 @@ const icw=id=>`<span class="icw">${ic(id)}</span>`;
 /* крупный знак сферы: иллюстрация из img/, если есть, иначе иконка */
 const badge=(id,warm)=>IMG.spheres&&IMG.spheres[id]?`<div class="badge art"><img src="${IMG.spheres[id]}" alt="" width="120" height="120"></div>`:`<div class="badge ${warm?'warm':''}">${ic(id,'ico lg')}</div>`;
 
-/* компас для заставки */
-function compass(){let t='';for(let i=0;i<72;i++){const a=i*5*Math.PI/180,l=i%18===0?12:i%2===0?6:3,r1=92,r2=r1-l;
-  t+=`<line x1="${(100+r1*Math.sin(a)).toFixed(1)}" y1="${(100-r1*Math.cos(a)).toFixed(1)}" x2="${(100+r2*Math.sin(a)).toFixed(1)}" y2="${(100-r2*Math.cos(a)).toFixed(1)}"/>`}
+/* компас для заставки: зелёный безель со шкалой, стороны света, роза ветров, объёмная стрелка */
+function compass(){
+  const P=(r,deg)=>{const a=deg*Math.PI/180;return[(100+r*Math.sin(a)).toFixed(1),(100-r*Math.cos(a)).toFixed(1)]};
+  let ticks='';for(let i=0;i<72;i++){const d=i*5,l=i%18===0?9:i%2===0?6:3.5,[x1,y1]=P(95,d),[x2,y2]=P(95-l,d);
+    ticks+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke-width="${i%18===0?2:1}"/>`}
+  // роза ветров: длинные лучи по сторонам света, короткие между ними; у каждого луча светлая и тёмная половина
+  const ray=(deg,len,w,dark,light)=>{const[tx,ty]=P(len,deg),[lx,ly]=P(w,deg-45),[rx,ry]=P(w,deg+45);
+    return `<path d="M100 100 L${tx} ${ty} L${lx} ${ly}Z" style="fill:${dark}"/><path d="M100 100 L${tx} ${ty} L${rx} ${ry}Z" style="fill:${light}"/>`};
+  let star='';[45,135,225,315].forEach(d=>star+=ray(d,42,8,'color-mix(in srgb,var(--muted) 45%,var(--surface))','var(--line)'));
+  [0,90,180,270].forEach(d=>star+=ray(d,60,11,'color-mix(in srgb,var(--accent) 45%,var(--surface))','color-mix(in srgb,var(--accent) 15%,var(--surface))'));
+  const letter=(t,deg,col)=>{const[x,y]=P(70,deg);return `<text x="${x}" y="${(+y+6).toFixed(1)}" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="19" font-weight="700" fill="${col}">${t}</text>`};
   return `<svg class="compass" viewBox="0 0 200 200" aria-hidden="true">
-  <circle cx="100" cy="100" r="96" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.5"/>
-  <g stroke="var(--muted)" stroke-width="1">${t}</g>
-  <circle cx="100" cy="100" r="64" fill="none" stroke="var(--line)"/>
-  <g fill="var(--line)"><path d="M100 100 L128 72 L106 100Z"/><path d="M100 100 L128 128 L100 106Z"/><path d="M100 100 L72 128 L94 100Z"/><path d="M100 100 L72 72 L100 94Z"/></g>
-  <g class="needle"><path d="M100 40 L109 100 L91 100Z" fill="var(--accent)"/><path d="M100 160 L91 100 L109 100Z" fill="var(--warm)"/></g>
-  <circle cx="100" cy="100" r="5" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.5"/>
-  <text x="100" y="26" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="16" font-weight="600" fill="var(--ink)">С</text>
+  <circle cx="100" cy="100" r="98" fill="var(--accent)"/>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity=".5"/>
+  <g stroke="var(--surface)" opacity=".85">${ticks}</g>
+  <circle cx="100" cy="100" r="82" fill="var(--surface)"/>
+  <circle cx="100" cy="100" r="82" fill="none" stroke="var(--ink)" stroke-width="1" opacity=".35"/>
+  <circle cx="100" cy="100" r="56" fill="none" stroke="var(--line)" stroke-width="1"/>
+  ${star}
+  ${letter('С',0,'var(--warm)')}${letter('В',90,'var(--ink)')}${letter('Ю',180,'var(--ink)')}${letter('З',270,'var(--ink)')}
+  <g class="needle">
+   <path d="M100 30 L110 100 L100 100Z" style="fill:color-mix(in srgb,var(--warm) 70%,var(--surface))"/><path d="M100 30 L90 100 L100 100Z" fill="var(--warm)"/>
+   <path d="M100 170 L110 100 L100 100Z" fill="var(--ink)"/><path d="M100 170 L90 100 L100 100Z" style="fill:color-mix(in srgb,var(--ink) 55%,var(--surface))"/>
+  </g>
+  <circle cx="100" cy="100" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+  <circle cx="100" cy="100" r="3" fill="var(--accent)"/>
   </svg>`}
 function hero(slim){
   if(IMG.hero&&!slim)return `<div class="hero art"><img src="${IMG.hero}" alt="" fetchpriority="high"></div>`;

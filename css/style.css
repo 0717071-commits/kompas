@@ -89,7 +89,7 @@ button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 @media (min-width:640px){.hero.art{margin-inline:0}.hero.art img{border-radius:var(--r) var(--r) 0 0}}
 .hero.slim{height:110px}
 .hero.slim .halo{width:96px;height:96px}
-.compass{position:relative;width:180px;height:180px}
+.compass{position:relative;width:200px;height:200px;filter:drop-shadow(0 10px 22px rgba(47,97,83,.28)) drop-shadow(0 2px 4px rgba(30,40,35,.15))}
 .hero.slim .compass{width:80px;height:80px}
 @media (prefers-reduced-motion:no-preference){.compass .needle{transform-origin:100px 100px;animation:seek 2.4s cubic-bezier(.3,1.6,.5,1) both}
  @keyframes seek{0%{transform:rotate(-70deg)}60%{transform:rotate(14deg)}100%{transform:rotate(18deg)}}}
