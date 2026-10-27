@@ -126,13 +126,13 @@ function roseSVG(opts={}){
   return `<svg class="rose" xmlns="http://www.w3.org/2000/svg" viewBox="-44 -4 448 368" role="img" aria-label="Роза сфер: важность и действия по каждой сфере">${g}</svg>`;
 }
 function rose(opts={}){
-  const leg=`<div class="legend"><span><i style="background:var(--accent)"></i>как важно</span><span><i style="background:var(--warm)"></i>сколько было действий</span>${S.prev?'<span><i style="border:2px dashed var(--muted)"></i>действия в прошлый раз</span>':''}</div>`;
+  const leg=`<div class="legend"><span><i style="background:var(--accent)"></i>как важно</span><span><i style="background:var(--warm)"></i>сколько делал(а)</span>${S.prev?'<span><i style="border:2px dashed var(--muted)"></i>действия в прошлый раз</span>':''}</div>`;
   return roseSVG(opts)+leg}
 
 /* ---------- мягкая проверка формулировок ---------- */
 const W='(^|[^а-яё])';
 const CHECKS=[
- {re:new RegExp(W+'(долж|надо|нужно|обязан|следует|приходится)','i'),t:'Слышится правило («должна», «надо»). За правилами обычно стоит ценность. Ради чего это для вас важно? Каким человеком вы при этом хотите быть?'},
+ {re:new RegExp(W+'(долж|надо|нужно|обязан|следует|приходится)','i'),t:'Слышится правило («надо», «я должен»). За правилами обычно стоит ценность. Ради чего это для вас важно? Каким человеком вы при этом хотите быть?'},
  {re:new RegExp(W+'(чтобы (меня|мне|он|она|они|нас)|меня (ценил|уважал|любил|понимал|замечал|слушал)|ко мне относ)','i'),t:'Здесь речь о том, как поступают другие, а это не в вашей власти. Что вы сами хотите вносить в эти отношения?'},
  {re:new RegExp(W+'(счастлив|спокойн|не трево|не волнов|не бояться|без страха|уверенн|не грустит|не злит|не чувствовать)','i'),t:'Похоже на желаемое чувство. Чувства приходят и уходят, и управлять ими напрямую не получается. Каким вы хотите быть, даже когда чувствуете разное?'},
  {re:new RegExp(W+'(купить|получить|найти работу|заработать|похудеть|выйти замуж|жениться|поступить|сдать|накопить|достичь|добиться)','i'),t:'Это похоже на цель: её можно достичь и вычеркнуть. Ценность — направление, по которому можно идти всегда. Каким вы хотите быть на пути к этой цели?'}
@@ -156,9 +156,9 @@ function vIntro(){
    ${has?'<button class="btn link" data-act="reset-ask" style="align-self:center">Начать заново</button><div id="resetbox"></div>':''}</div>
   <div class="card stack">${demoRose()}</div>
   <div class="stack small muted">
-   <p><b style="color:var(--ink)">Займёт 15–20 минут.</b> Правильных ответов нет: пишите своими словами, как думаете и чувствуете.</p>
+   <p><b style="color:var(--ink)">Займёт 15–20 минут.</b> Правильных ответов нет: пишите своими словами — так, как думаете и чувствуете.</p>
    <p><b style="color:var(--ink)">Всё остаётся на этом устройстве.</b> Ответы никуда не отправляются; поделиться с психологом можно в конце, если захотите.</p>
-   <p>Разговор о ценностях иногда задевает: замечать, где жизнь идёт не так, как хочется, бывает больно. Это нормально и даже говорит о том, что вам это важно. Можно сделать паузу и вернуться позже — ответы сохранятся.</p>
+   <p>Разговор о ценностях иногда задевает: замечать, где жизнь идёт не так, как хочется, бывает больно. Это нормально и даже говорит о том, что вам не всё равно. Можно сделать паузу и вернуться позже — ответы сохранятся.</p>
   </div>
   </div>`}
 
@@ -181,7 +181,7 @@ function vMap(){
    <div class="scales stack" style="gap:4px">
     <div class="scale imp ${r.ti?'':'untouched'}"><label for="i-${s.id}">Насколько важно для меня</label><output id="oi-${s.id}">${r.ti?r.imp:'—'}</output>
      <input type="range" min="0" max="10" step="1" id="i-${s.id}" value="${r.imp}" style="--p:${r.imp*10}%" data-k="imp" data-sid="${s.id}"></div>
-    <div class="scale act ${r.ta?'':'untouched'}"><label for="a-${s.id}">Сколько действий было за неделю</label><output id="oa-${s.id}">${r.ta?r.act:'—'}</output>
+    <div class="scale act ${r.ta?'':'untouched'}"><label for="a-${s.id}">Сколько я делал(а) для этого за неделю</label><output id="oa-${s.id}">${r.ta?r.act:'—'}</output>
      <input type="range" min="0" max="10" step="1" id="a-${s.id}" value="${r.act}" style="--p:${r.act*10}%" data-k="act" data-sid="${s.id}"></div>
    </div></div>`}).join('')}
   </div>
@@ -195,7 +195,7 @@ function vChoose(){
   if(!S.chosen.length){S.chosen=g.filter(x=>x.imp>=6&&x.gap>=2).slice(0,2).map(x=>x.s.id);save()}
   return `<div class="view stack" style="gap:18px">${progressBar()}
   <div class="stack"><span class="eyebrow">Шаг 2 · Выбор направления</span><h2>С чего начнём?</h2>
-  <p class="muted">Выберите одну–три сферы, с которыми хочется поработать. Мы отметили те, где разрыв между «важно» и «делаю» самый большой. Но можно выбрать и сферу, где всё и так неплохо: поддержать то, что уже работает, тоже ценно.</p></div>
+  <p class="muted">Выберите от одной до трёх сфер, с которыми хочется поработать. Мы отметили те, где разрыв между «важно» и «делаю» самый большой. Но можно выбрать и сферу, где всё и так неплохо: поддержать то, что уже работает, тоже ценно.</p></div>
   <div class="card">${rose({highlight:true})}</div>
   <div class="stack" style="gap:8px">${g.map(x=>{const on=S.chosen.includes(x.s.id);return `<button class="pick" aria-pressed="${on}" data-act="pick" data-sid="${x.s.id}">
    <span class="box">${on?'✓':''}</span>${ic(x.s.id)}<div><b>${x.s.name}</b><div class="small muted">важно ${x.imp} · действий ${x.act}</div></div>
@@ -208,7 +208,7 @@ function vDir(i){
   return `<div class="view stack" style="gap:18px">${progressBar()}
   <div class="stack"><div class="shead"><div class="stack" style="gap:8px"><span class="eyebrow">${s.name} · Направление</span><h2>Каким вы хотите быть в этой сфере?</h2></div>${badge(id)}</div>
   <p class="muted">Важность ${r.imp}, действий ${r.act}. Отвечайте о себе, о том, что в вашей власти: каким человеком вы хотите быть, а не каким должен быть кто-то другой или как всё должно сложиться.</p></div>
-  ${field('who','Какие качества вы хотите проявлять здесь?','Каким человеком вы хотите быть в этой сфере, если бы выбирали сами, без оглядки на «надо»?',v.who,`Например: ${SPHERE_EX[id].who}…`)}
+  ${field('who','Какие качества вы хотите проявлять здесь?','Каким человеком вы хотели бы быть в этой сфере, если бы выбирали сами, без оглядки на «надо»?',v.who,`Например: ${SPHERE_EX[id].who}…`)}
   <details class="card"><summary>Не знаю, что написать</summary><div class="stack">
    <p>Попробуйте один из вопросов:</p>
    <p class="quote">Представьте, что одобрение всех важных для вас людей уже гарантировано. Каким бы вы тогда были в этой сфере?</p>
@@ -279,7 +279,7 @@ function vResult(){
    <details><summary class="small">Что внутри ссылки</summary><p class="small muted">Ответы сжаты и записаны прямо в адрес ссылки, после знака #. Эта часть адреса не передаётся на сервер: психолог откроет ссылку и увидит итог только для просмотра.</p></details>
    <pre class="copy" id="copytext" hidden>${esc(asText())}</pre></div>
   <div class="card stack"><h3>Через неделю</h3>
-   <p class="small muted">Вернитесь сюда и отметьте карту сфер заново. Ваши направления и шаги сохранятся, а на розе будет видно, где действий стало больше.</p>
+   <p class="small muted">Вернитесь сюда и заново отметьте сферы. Ваши направления и шаги сохранятся, а на розе будет видно, где действий стало больше.</p>
    <div class="row"><button class="btn ghost" data-act="week">Отметить новую неделю</button>
    <button class="btn link" data-act="reset-ask">Стереть всё</button></div><div id="resetbox"></div></div>
   </div>`}

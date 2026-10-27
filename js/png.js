@@ -39,7 +39,7 @@ function layoutPNG(ctx,img,draw){
   y+=rh+14;
   // легенда
   if(draw){ctx.font=`400 24px ${F_BODY}`;ctx.textAlign='left';
-    const items=[[PNG_C.accent,'как важно'],[PNG_C.warm,'сколько было действий']];
+    const items=[[PNG_C.accent,'как важно'],[PNG_C.warm,'сколько делал(а)']];
     if(S.prev)items.push([null,'в прошлый раз']);
     let total=0;items.forEach(([,t])=>total+=36+ctx.measureText(t).width+28);total-=28;let x=(W-total)/2;
     items.forEach(([c,t])=>{if(c){ctx.fillStyle=c;roundRect(ctx,x,y+4,22,22,5);ctx.fill()}else{ctx.setLineDash([5,5]);ctx.strokeStyle=PNG_C.muted;ctx.lineWidth=3;roundRect(ctx,x,y+4,22,22,5);ctx.stroke();ctx.setLineDash([])}
