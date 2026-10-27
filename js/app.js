@@ -193,7 +193,7 @@ function vChoose(){
 function vDir(i){
   const id=S.chosen[i],s=sp(id),r=S.ratings[id],v=S.values[id]||(S.values[id]={who:'',deeds:'',memory:''});
   return `<div class="view stack" style="gap:18px">${progressBar()}
-  <div class="stack">${badge(id)}<span class="eyebrow">${s.name} · Направление</span><h2>Каким вы хотите быть в этой сфере?</h2>
+  <div class="stack"><div class="shead"><div class="stack" style="gap:8px"><span class="eyebrow">${s.name} · Направление</span><h2>Каким вы хотите быть в этой сфере?</h2></div>${badge(id)}</div>
   <p class="muted">Важность ${r.imp}, действий ${r.act}. Отвечайте о себе, о том, что в вашей власти: каким человеком вы хотите быть, а не каким должен быть кто-то другой или как всё должно сложиться.</p></div>
   ${field('who','Какие качества вы хотите проявлять здесь?','Каким человеком вы хотите быть в этой сфере, если бы выбирали сами, без оглядки на «надо»?',v.who,'Например: внимательной и терпеливой, честно говорить о том, что чувствую…')}
   <details class="card"><summary>Не знаю, что написать</summary><div class="stack">
@@ -215,7 +215,7 @@ function field(k,label,sub,val,ph){const h=check(val);return `<div class="field"
 function vAct(i){
   const id=S.chosen[i],s=sp(id),st=S.steps[id]||(S.steps[id]={what:'',when:'',barriers:''}),v=S.values[id]||{};
   return `<div class="view stack" style="gap:18px">${progressBar()}
-  <div class="stack">${badge(id,true)}<span class="eyebrow">${s.name} · Шаг</span><h2>Один маленький шаг на этой неделе</h2>
+  <div class="stack"><div class="shead"><div class="stack" style="gap:8px"><span class="eyebrow">${s.name} · Шаг</span><h2>Один маленький шаг на этой неделе</h2></div>${badge(id,true)}</div>
   ${v.who?`<p class="muted">Ваше направление: <i>${esc(v.who)}</i></p>`:''}
   <p class="muted">Выберите шаг настолько маленький, чтобы он получился даже в трудный день. Не нужно менять всю жизнь сразу, важно повернуть в нужную сторону.</p></div>
   <div class="field"><label for="f-what">Что я сделаю?</label><span class="sub">Конкретное действие, которое можно увидеть со стороны.</span>

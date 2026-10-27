@@ -160,8 +160,12 @@ details[open] summary{margin-bottom:10px}
 .badge{width:60px;height:60px;border-radius:18px;background:var(--accent-soft);display:grid;place-items:center}
 .badge.warm{background:var(--warm-soft)}
 .badge.warm .ico{color:var(--warm)}
-.badge.art{width:132px;height:auto;background:none;border-radius:0;margin:-6px 0 -4px -8px}
-.badge.art img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+/* шапка экранов сферы: заголовок слева, иллюстрация справа */
+.shead{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+.shead h2{font-size:clamp(1.75rem,6.4vw,2.3rem)}
+.badge.art{position:relative;width:clamp(92px,24vw,150px);height:auto;aspect-ratio:1;background:none;border-radius:0}
+.badge.art img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 68%;mix-blend-mode:multiply}
+.badge.art img.soft-edges{-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent);mask-image:radial-gradient(closest-side,#000 62%,transparent);-webkit-mask-composite:source-over;mask-composite:add}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .badge.art img{mix-blend-mode:normal;border-radius:16px}}
 :root[data-theme="dark"] .badge.art img{mix-blend-mode:normal;border-radius:16px}
 
